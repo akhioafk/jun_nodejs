@@ -11,7 +11,7 @@ export class Stock {
     shop_id: number;
 
     @Column()
-    product_id: number;
+    product_plu: number;
 
     @Column('integer')
     shelf_quantity: number;
@@ -24,6 +24,6 @@ export class Stock {
     shop: Shop;
 
     @ManyToOne(() => Product, (product) => product.stocks, {onDelete: "CASCADE"})
-    @JoinColumn({name:'product_id'})
+    @JoinColumn({name:'product_plu'})
     product: Product;
 }

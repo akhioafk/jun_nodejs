@@ -1,4 +1,4 @@
-import { createProduct } from "../service/productService";
+import { createProductService } from "../service/productService";
 
 export const createProductController = async (req, res) => {
     try {
@@ -9,7 +9,7 @@ export const createProductController = async (req, res) => {
 
         }
 
-        const newProduct = await createProduct(plu, name);
+        const newProduct = await createProductService(plu, name);
 
         res.status(201).json(newProduct);
 

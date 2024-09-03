@@ -1,4 +1,4 @@
-import { createProduct } from '../service/productService';
+import { createProductService } from '../service/productService';
 import { productRepository } from '../repository/repositories';
 
 jest.mock('../repository/repositories', () => ({
@@ -35,7 +35,7 @@ describe('product service', () => {
     it('should create a product', async () => {
         const productData = { plu: '12345', name: 'product name' };
 
-        const result = await createProduct(productData.plu, productData.name);
+        const result = await createProductService(productData.plu, productData.name);
 
         expect(saveMock).toHaveBeenCalledWith(expect.objectContaining({
             plu: productData.plu,

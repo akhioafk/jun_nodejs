@@ -1,5 +1,5 @@
 import { createProductController } from '../controller/productController';
-import { createProduct } from '../service/productService';
+import { createProductService } from '../service/productService';
 
 jest.mock('../service/productService');
 jest.mock('typeorm', () => ({
@@ -33,11 +33,11 @@ describe('product controller', () => {
   });
 
   it('should create a product', async () => {
-    (createProduct as jest.Mock).mockResolvedValue({ id: 1, plu: '12345', name: 'product name' });
+    (createProductService as jest.Mock).mockResolvedValue({ id: 1, plu: '12345', name: 'product name' });
 
     await createProductController(mockRequest, mockResponse);
 
-    expect(createProduct).toHaveBeenCalledWith('12345', 'product name');
+    expect(createProductService).toHaveBeenCalledWith('12345', 'product name');
     expect(mockResponse.status).toHaveBeenCalledWith(201);
     expect(mockResponse.json).toHaveBeenCalledWith({ id: 1, plu: '12345', name: 'product name' });
   });
@@ -52,7 +52,7 @@ describe('product controller', () => {
   });
 
   it('should return 500 on server error', async () => {
-    (createProduct as jest.Mock).mockRejectedValue(new Error('server error'));
+    (createProductService as jest.Mock).mockRejectedValue(new Error('server error'));
 
     await createProductController(mockRequest, mockResponse);
 
