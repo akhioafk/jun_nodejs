@@ -32,3 +32,4 @@ export const createStockService = async (shop_id: number, product_plu: number, s
 
     return await StockRepository.save(stock)
 }
+
