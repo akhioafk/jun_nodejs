@@ -1,11 +1,11 @@
 import { Product } from "../entity/productEntity";
-import { productRepository } from "../repository/repositories"
+import { getProductRepository } from "../repository/repositories"
 
-export const createProductService = async (plu: string, name: string) => {
-    const ProductRepository = productRepository;
+export const createProductService = async (plu: number, name: string) => {
+    const productRepository = getProductRepository()
     const product = new Product();
     product.plu = plu;
     product.name = name
 
-    return await ProductRepository.save(product);
+    return await productRepository.save(product);
 };

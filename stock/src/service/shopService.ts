@@ -1,10 +1,10 @@
 import { Shop } from "../entity/shopEntity";
-import { shopRepository } from "../repository/repositories"
+import { getShopRepository } from "../repository/repositories"
 
 export const createShopService = async (name: string) => {
-    const ShopRepository = shopRepository;
+    const shopRepository = getShopRepository();
     const shop = new Shop()
     
     shop.name = name;
-    return await ShopRepository.save(shop)
+    return await shopRepository.save(shop)
 }

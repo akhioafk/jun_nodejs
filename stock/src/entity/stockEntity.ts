@@ -24,6 +24,6 @@ export class Stock {
     shop: Shop;
 
     @ManyToOne(() => Product, (product) => product.stocks, {onDelete: "CASCADE"})
-    @JoinColumn({name:'product_plu'})
+    @JoinColumn({name:'product_plu' , referencedColumnName: 'plu'})
     product: Product;
 }

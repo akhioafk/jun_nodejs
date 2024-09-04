@@ -1,14 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Unique, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Stock } from './stockEntity';
 
 @Entity()
-@Unique(['plu'])
 export class Product {
     @PrimaryGeneratedColumn()
     id: number;
  
-    @Column()
-    plu: string;
+    @Column({ unique: true })
+    plu: number;
 
     @Column()
     name: string;

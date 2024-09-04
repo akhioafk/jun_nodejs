@@ -1,28 +1,21 @@
+import { getProductRepository } from '../repository/repositories'; 
 import { createProductService } from '../service/productService';
-import { productRepository } from '../repository/repositories';
 
-jest.mock('../repository/repositories', () => ({
-    productRepository: {
-        save: jest.fn(),
-    },
-}));
-jest.mock('typeorm', () => ({
-    PrimaryGeneratedColumn: jest.fn(),
-    Column: jest.fn(),
-    Entity: jest.fn(),
-    getRepository: jest.fn(),
-    OneToMany: jest.fn(),
-    ManyToOne: jest.fn(),
-    JoinColumn: jest.fn(),
-    Unique: jest.fn()
-}));
+jest.mock('../repository/repositories', () => {
+    const saveMock = jest.fn();
 
+    return {
+        getProductRepository: () => ({
+            save: saveMock,
+        }),
+    };
+});
 
 describe('product service', () => {
     let saveMock: jest.Mock;
 
     beforeEach(() => {
-        saveMock = (productRepository.save as jest.Mock).mockResolvedValue({
+        saveMock = (getProductRepository().save as jest.Mock).mockResolvedValue({
             plu: '12345',
             name: 'product name',
         });

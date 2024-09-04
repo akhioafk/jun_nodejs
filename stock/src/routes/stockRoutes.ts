@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createStockController } from "../controller/stockController";
+import { stockController } from "../controller/stockController";
 
 const stockRoutes = Router()
 
-stockRoutes.post('/create', createStockController)
+stockRoutes.post('/create', stockController.createStockController)
+stockRoutes.post('/update', stockController.increaseStockController)
 
 export default stockRoutes;
