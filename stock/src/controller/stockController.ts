@@ -51,6 +51,23 @@ class StockController {
                 return res.status(400).json({error: error.message})
             }        
     }
+
+    async getStocks(req, res) {
+        try {
+            const filters = {
+                plu: req.query.plu,
+                shopId: req.query.shop_id,
+                quantityOnShelfFrom: req.query.quantity_on_shelf_from,
+                quantityOnShelfTo: req.query.quantity_on_shelf_to,
+                quantityInOrderFrom: req.query.quantity_in_order_from,
+                quantityInOrderTo: req.query.quantity_in_order_to,
+              };
+            const stocks = await stockService.getFilteredStock(filters);
+            res.json(stocks);
+        }  catch(error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 }
 
 export const stockController = new StockController();

@@ -66,6 +66,36 @@ class StockService {
 
         return await stockRepository.save(stock)
     }
+
+    async getFilteredStock (filters:any) {
+        const stockRepository = getStockRepository();
+        const queryBuilder = stockRepository.createQueryBuilder("stock").
+        innerJoinAndSelect("stock.product", "product")
+
+        if (filters.plu) {
+            queryBuilder.andWhere("product.plu = :plu", { plu: filters.plu })
+        }
+
+        if (filters.shop_id) {
+            queryBuilder.andWhere("product.shop_id = :shop_id", { shop_id: filters.shop_id })
+        }
+
+        if (filters.quantityOnShelfFrom !== undefined && filters.quantityOnShelfTo !== undefined) {
+            queryBuilder.andWhere("stock.quantityOnShelf BETWEEN :from AND :to", {
+              from: filters.quantityOnShelfFrom,
+              to: filters.quantityOnShelfTo,
+            });
+          }
+        
+        if (filters.quantityInOrderFrom !== undefined && filters.quantityInOrderTo !== undefined) {
+        queryBuilder.andWhere("stock.quantityInOrder BETWEEN :from AND :to", {
+            from: filters.quantityInOrderFrom,
+            to: filters.quantityInOrderTo,
+            });
+        }
+
+        return queryBuilder.getMany();
+    }
 }
 
 export const stockService = new StockService()
