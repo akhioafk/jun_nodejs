@@ -1,7 +1,6 @@
 import { getProductRepository, getShopRepository, getStockRepository } from "../repository/repositories";
 
 class StockService {
-
     async createStockService(shop_id: number, product_plu: number, shelf_quantity: number, order_quantity: number) {
         const productRepository = getProductRepository();
         const stockRepository = getStockRepository();
@@ -45,6 +44,25 @@ class StockService {
 
         stock.shelf_quantity += shelf_quantity_add
         stock.order_quantity += order_quantity_add
+
+        return await stockRepository.save(stock)
+    }
+
+    async decreaseStockService (shop_id: number, product_plu: number, shelf_quantity_add: number, order_quantity_add: number) {
+        const stockRepository = getStockRepository();
+        const stock = await stockRepository.findOne({
+            where: {
+                shop_id: shop_id,
+                product_plu: product_plu
+            }
+        })
+
+        if (!stock) {
+            throw new Error(`stock for shop_id ${shop_id} and plu product ${product_plu} was not found bro`);
+        }
+
+        stock.shelf_quantity -= shelf_quantity_add
+        stock.order_quantity -= order_quantity_add
 
         return await stockRepository.save(stock)
     }
