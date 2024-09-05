@@ -4,8 +4,9 @@
 
 This project is a microservices application for managing product stock in a store and tracking product actions. It consists of two main services:
 
-Stock Management Service – Manages product quantities on shelves and in orders.
-Product Action History Service – Records actions related to products, such as stock updates.
+* Stock Management Service – Manages product quantities on shelves and in orders.
+
+* Product Action History Service – Records actions related to products, such as stock updates.
 
 ### Technologies
 
@@ -38,5 +39,12 @@ cd jun_nodejs
 
 ```
 docker compose build
+docker compose up
+```
+
+### P.S
+In case of any problems, try to rerun the docker containers:
+```
+docker compose down
 docker compose up
 ```
