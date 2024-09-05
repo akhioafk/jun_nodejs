@@ -1,4 +1,13 @@
+import axios from "axios";
 import { getProductRepository, getShopRepository, getStockRepository } from "../repository/repositories";
+
+async function updateHistoryStock(plu, shop_id, action) {
+    await axios.post('http://history-server:3001/api/history/create', {
+        plu,
+        shop_id,
+        action
+    })
+}
 
 class StockService {
     async createStockService(shop_id: number, product_plu: number, shelf_quantity: number, order_quantity: number) {
@@ -25,7 +34,8 @@ class StockService {
             shelf_quantity: shelf_quantity,
             order_quantity: order_quantity
         })
-    
+        
+        await updateHistoryStock(product_plu, shop_id, 'Created Stock')
         return await stockRepository.save(stock)
     }
     
@@ -45,6 +55,7 @@ class StockService {
         stock.shelf_quantity += shelf_quantity_add
         stock.order_quantity += order_quantity_add
 
+        await updateHistoryStock(product_plu, shop_id, `Increased Shelf Quantity by ${shelf_quantity_add} and Order Quantity by ${order_quantity_add}.`)
         return await stockRepository.save(stock)
     }
 
@@ -64,6 +75,7 @@ class StockService {
         stock.shelf_quantity -= shelf_quantity_add
         stock.order_quantity -= order_quantity_add
 
+        await updateHistoryStock(product_plu, shop_id, `Decreased Shelf Quantity by ${shelf_quantity_add} and Order Quantity by ${order_quantity_add}.`)
         return await stockRepository.save(stock)
     }
 

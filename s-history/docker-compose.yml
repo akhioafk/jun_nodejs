@@ -1,24 +1,8 @@
 services:
-  stock-server:
-    build:
-      context: ./stock
-      dockerfile: Dockerfile
+  server:
+    build: .
     volumes: 
-      - ./stock:/app
-      - /app/node_modules
-    ports: 
-      - "3000:3000"
-    depends_on:
-      - db
-    environment:
-      DATABASE_URL: postgres://myuser:mypassword@db:5432/mydatabase
-
-  history-server:
-    build:
-      context: ./s-history
-      dockerfile: Dockerfile
-    volumes: 
-      - ./s-history:/app
+      - ./:/app
       - /app/node_modules
     ports: 
       - "3001:3001"
