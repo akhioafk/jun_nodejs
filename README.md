@@ -45,6 +45,6 @@ docker compose up
 ### P.S
 In case of any problems, try to rerun the docker containers:
 ```
-docker compose down
+cmd + c / ctrl + c
 docker compose up
 ```
